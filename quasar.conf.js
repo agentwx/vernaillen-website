@@ -7,7 +7,8 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     boot: [
       'i18n',
-      'axios'
+      'axios',
+      'waipoint'
     ],
 
     css: [
@@ -45,11 +46,21 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel'
+        'QItemLabel',
+        'QImg',
+        'QSeparator',
+        'QPageScroller',
+        'QFooter',
+        'QCarousel',
+        'QCarouselSlide',
+        'QAjaxBar',
+        'QTimeline',
+        'QTimelineEntry'
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
+        'TouchSwipe'
       ],
 
       // Quasar plugins
@@ -100,7 +111,7 @@ module.exports = function (ctx) {
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#027be3',
+        theme_color: '#1bbc9b',
         icons: [
           {
             'src': 'statics/icons/icon-128x128.png',
