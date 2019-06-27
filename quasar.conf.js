@@ -105,13 +105,13 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        // name: 'Wouter Vernaillen',
-        // short_name: 'Wouter Vernaillen',
-        // description: 'Vernaillen.com website',
+        name: 'Wouter Vernaillen',
+        short_name: 'Wouter Vernaillen',
+        description: 'Vernaillen.com website',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#1bbc9b',
+        theme_color: '#2e3d50',
         icons: [
           {
             'src': 'statics/icons/icon-128x128.png',
