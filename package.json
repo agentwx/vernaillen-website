@@ -17,7 +17,8 @@
     "undeploy": "kubectl delete -f kubernetes.yml",
     "deploy": "npm run undeploy && npm run docker && kubectl apply -f kubernetes.yml",
     "audit:node_modules": "yarn audit --json > ./test/audits/node_modules_audit.json",
-    "audit:lighthouse": "lighthouse http://localhost view --output-path=./test/lighthouse/reports/index.html --config-path=./test/lighthouse/configs/full-config.js && quasar serve test/lighthouse/reports/ --port 8789 --open"
+    "audit:lighthouse:dev": "lighthouse http://localhost view --output-path=./test/lighthouse/reports/index.html --config-path=./test/lighthouse/configs/full-config.js && quasar serve test/lighthouse/reports/ --port 8789 --open",
+    "audit:lighthouse:prod": "lighthouse https://test.vernaillen.dev view --output-path=./test/lighthouse/reports/index.html --config-path=./test/lighthouse/configs/full-config.js && quasar serve test/lighthouse/reports/ --port 8789 --open"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
