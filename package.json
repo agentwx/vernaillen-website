@@ -1,7 +1,7 @@
 {
-  "name": "vernaillen-quasar",
+  "name": "vernaillen-website",
   "version": "0.0.1",
-  "description": "Vernaillen.com website",
+  "description": "Prototype for rebuilding the Vernaillen.com website as a Progressive Web App with Vue.js, Quasar en Markdown support",
   "productName": "Wouter Vernaillen",
   "cordovaId": "com.vernaillen.website.app",
   "author": "Wouter Vernaillen <wouter@vernaillen.com>",
