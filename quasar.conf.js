@@ -89,8 +89,8 @@ module.exports = function (ctx) {
     },
 
     devServer: {
-      // https: true,
-      // port: 8080,
+      https: true,
+      port: 8080,
       open: true // opens browser window automatically
     },
 
@@ -105,9 +105,10 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        name: 'Wouter Vernaillen',
-        short_name: 'Wouter Vernaillen',
-        description: 'Vernaillen.com website',
+        start_url: '/',
+        name: 'Vernaillen.com',
+        short_name: 'Vernaillen.com',
+        description: 'Wouter Vernaillen\'s website',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -139,39 +140,6 @@ module.exports = function (ctx) {
             'type': 'image/png'
           }
         ]
-      }
-    },
-
-    cordova: {
-      // id: 'org.cordova.quasar.app',
-      // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-    },
-
-    electron: {
-      // bundler: 'builder', // or 'packager'
-
-      extendWebpack (cfg) {
-        // do something with Electron main process Webpack cfg
-        // chainWebpack also available besides this extendWebpack
-      },
-
-      packager: {
-        // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
-        // OS X / Mac App Store
-        // appBundleId: '',
-        // appCategoryType: '',
-        // osxSign: '',
-        // protocol: 'myapp://path',
-
-        // Windows only
-        // win32metadata: { ... }
-      },
-
-      builder: {
-        // https://www.electron.build/configuration/configuration
-
-        // appId: 'vernaillen-quasar'
       }
     }
   }
