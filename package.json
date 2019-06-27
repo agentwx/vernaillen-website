@@ -10,6 +10,8 @@
     "lint": "eslint --ext .js,.vue src",
     "test:unit": "jest --updateSnapshot",
     "test:watch": "concurrently \"quasar dev\" \"jest --watch\"",
+    "test:e2e": "cypress open",
+    "test:e2e:CI": "cypress run",
     "docker": "quasar build -m pwa && docker build . -t vernaillen/vernaillen-website:latest",
     "undeploy": "kubectl delete -f kubernetes.yml",
     "deploy": "npm run undeploy && npm run docker && kubectl apply -f kubernetes.yml",
@@ -27,15 +29,16 @@
     "@quasar/cli": "^1.0.0-rc.2",
     "@quasar/quasar-app-extension-icon-genie": "^1.0.0",
     "@quasar/quasar-app-extension-testing": "^1.0.0",
+    "@quasar/quasar-app-extension-testing-e2e-cypress": "^1.0.0-beta.10",
     "@quasar/quasar-app-extension-testing-quality": "^1.0.0-beta.8",
     "@quasar/quasar-app-extension-testing-unit-jest": "^1.0.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
+    "concurrently": "^4.1.1",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-waypoint": "^3.2.2",
-    "concurrently": "^4.1.1"
+    "vue-waypoint": "^3.2.2"
   },
   "engines": {
     "node": ">= 8.9.0",

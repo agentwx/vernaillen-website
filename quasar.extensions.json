@@ -43,5 +43,10 @@
       "e2e-webdriver",
       "quality"
     ]
+  },
+  "@quasar/testing-e2e-cypress": {
+    "options": [
+      "scripts"
+    ]
   }
 }
