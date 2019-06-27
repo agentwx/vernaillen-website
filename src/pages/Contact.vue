@@ -2,12 +2,12 @@
   <q-page
     padding
     transition="slide-left">
-    <p>This is the about page</p>
+    <p>This is the contact page</p>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: 'PageAbout'
+  name: 'PageContact'
 }
 </script>

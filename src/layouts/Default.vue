@@ -1,35 +1,41 @@
 <template>
-  <q-layout view="hHh Lpr fFf">
+  <q-layout view="hHh lpR fFf">
+    <q-ajax-bar
+      ref="bar"
+      position="top"
+      color="primary"
+      size="3px"
+    />
 
     <q-header class="bg-white text-grey-9 shadow-1">
-      <q-toolbar class="">
-        <q-btn dense flat round icon="menu" @click="left = !left" class="lt-sm" />
-        <q-toolbar-title class="text-center">
-          <router-link to="/home">
-            <q-img
-              :src="require('../assets/img/vernaillen-logo.png')"
-              style="height: 50px; width: 120px"
-              transition="slide-down">
-              <template v-slot:loading/>
-            </q-img>
-          </router-link>
+      <q-toolbar>
+        <q-toolbar-title>
+          <div class="q-py-sm q-px-md">
+            {{pageName()}}
+          </div>
         </q-toolbar-title>
-        <div class="float-right q-py-sm q-px-lg">
-          {{currentPageName}}
-        </div>
+        <router-link to="/home" class="absolute-center">
+          <q-img
+            :src="require('../assets/img/vernaillen-logo.png')"
+            style="height: 50px; width: 120px"
+            transition="slide-down">
+            <template v-slot:loading/>
+          </q-img>
+        </router-link>
+        <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" class="lt-sm" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left"
+    <q-drawer v-model="showMenu"
               :mini="miniState"
               @click.capture="drawerClick"
-              side="left"
+              side="right"
               :width="250"
               :breakpoint="500"
               bordered
               show-if-above
               content-class="bg-grey-1">
-      <q-toolbar class="lt-sm">
+      <q-toolbar class="lt-sm shadow-1">
         <q-toolbar-title class="text-center">
           Menu
         </q-toolbar-title>
@@ -49,11 +55,11 @@
           <q-item-section>Career</q-item-section>
         </q-item>
         <q-separator></q-separator>
-        <q-item to="/technologies" clickable v-ripple>
+        <q-item to="/stack" clickable v-ripple>
           <q-item-section avatar>
             <q-icon color="primary" name="code" />
           </q-item-section>
-          <q-item-section>Technologies</q-item-section>
+          <q-item-section>Stack</q-item-section>
         </q-item>
         <q-separator></q-separator>
         <q-item to="/music" clickable v-ripple>
@@ -76,14 +82,15 @@
           </q-item-section>
           <q-item-section>Contact</q-item-section>
         </q-item>
+        <q-separator></q-separator>
       </q-list>
-      <div class="q-mini-drawer-hide absolute" style="top: 7px; right: -18px">
+      <div class="q-mini-drawer-hide absolute" style="top: 7px; left: -18px">
         <q-btn
           dense
           round
           unelevated
           color="primary"
-          icon="chevron_left"
+          icon="chevron_right"
           @click="miniState = true"
         />
       </div>
@@ -93,9 +100,7 @@
       v-touch-swipe.mouse.left="handleSwipeLeft"
       v-touch-swipe.mouse.right="handleSwipeRight"
       style="overflow: hidden;">
-      <transition
-        :name="transitionName"
-        mode="out-in">
+      <transition :name="transitionName" mode="out-in">
         <router-view />
       </transition>
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
@@ -103,10 +108,8 @@
       </q-page-scroller>
     </q-page-container>
 
-    <q-footer class="bg-secondary text-grey-3 shadow-up-2 text-center" style="height: 40px">
-      <div class="max1200 q-pa-sm">
-        © 2019 Vernaillen Consulting
-      </div>
+    <q-footer class="bg-secondary text-grey-3 shadow-up-2 text-center q-pa-sm">
+      © 2019 Vernaillen Consulting
     </q-footer>
 
   </q-layout>
@@ -117,7 +120,7 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      left: true,
+      showMenu: true,
       miniState: false,
       prevHeight: 0,
       transitionName: 'slide-left',
@@ -127,26 +130,21 @@ export default {
   },
   created () {
     this.$router.beforeEach((to, from, next) => {
-      let transitionName = to.meta.transitionName || from.meta.transitionName
-      if (transitionName === 'slide') {
-        const toDepth = to.path.split('/').length
-        const fromDepth = from.path.split('/').length
-        transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      const toDepth = to.name.length
+      const fromDepth = from.name.length
+      let transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      if (toDepth === 1 && fromDepth === 6) {
+        transitionName = 'slide-left'
+      } else if (toDepth === 6 && fromDepth === 1) {
+        transitionName = 'slide-right'
       }
       this.transitionName = transitionName || 'slide-left'
       next()
     })
     this.$router.afterEach((to, from, next) => {
-      this.currentPageName = this.$router.currentRoute.name
+      this.currentPageName = to.name
     })
     this.currentPageName = this.$router.currentRoute.name
-    this.setShowBreadcrumb(this.currentPageName)
-  },
-  watch: {
-    // whenever question changes, this function will run
-    currentPageName: function (newPage, oldPage) {
-      this.setShowBreadcrumb(newPage)
-    }
   },
   methods: {
     drawerClick (e) {
@@ -161,56 +159,36 @@ export default {
         e.stopPropagation()
       }
     },
-    setShowBreadcrumb (currentPageName) {
-      console.log('currentPageName: ' + currentPageName)
-      this.showBreadcrumb = currentPageName !== '' && currentPageName !== 'home'
-    },
-    handleSwipeLeft ({ evt, ...info }) {
-      switch (this.$router.currentRoute.name) {
-        case 'home':
-          this.$router.push('/career')
-          break
-        case 'career':
-          this.$router.push('/technologies')
-          break
-        case 'technologies':
-          this.$router.push('/music')
-          break
-        case 'music':
-          this.$router.push('/travel')
-          break
-        case 'travel':
-          this.$router.push('/about')
-          break
-        case 'about':
-          this.$router.push('/home')
-          break
-        default:
-          this.$router.push('/home')
+    handleSwipeLeft () {
+      if (this.currentPageName.length === 0) {
+        this.$router.push({ name: 'xx' })
+      } else if (this.currentPageName.length > 5) {
+        this.$router.push({ name: 'x' })
+      } else {
+        this.$router.push({ name: this.currentPageName + 'x' })
       }
     },
-    handleSwipeRight ({ evt, ...info }) {
-      switch (this.$router.currentRoute.name) {
-        case 'home':
-          this.$router.push('/about')
-          break
-        case 'career':
-          this.$router.push('/home')
-          break
-        case 'technologies':
-          this.$router.push('/career')
-          break
-        case 'music':
-          this.$router.push('/technologies')
-          break
-        case 'travel':
-          this.$router.push('/music')
-          break
-        case 'about':
-          this.$router.push('/travel')
-          break
+    handleSwipeRight () {
+      if (this.currentPageName.length < 2) {
+        this.$router.push({ name: 'xxxxxx' })
+      } else {
+        this.$router.push({ name: this.currentPageName.substring(1) })
+      }
+    },
+    pageName () {
+      switch (this.currentPageName) {
+        case 'xx':
+          return 'Career'
+        case 'xxx':
+          return 'Stack'
+        case 'xxxx':
+          return 'Music'
+        case 'xxxxx':
+          return 'Travel'
+        case 'xxxxxx':
+          return 'Contact'
         default:
-          this.$router.push('/home')
+          return 'Home'
       }
     }
   }

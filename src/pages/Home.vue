@@ -62,8 +62,7 @@ export default {
     z-index: 101;
   }
   .slide .slide-header h1 {
-    font-size: 1.5em;
-    font-size: 4vw;
+    font-size: 2em;
     line-height: 1.2;
     text-shadow: 1px 1px 1px #333;
     margin: 0 0 30px 0;
@@ -72,5 +71,10 @@ export default {
     font-family: 'Roboto Mono',monospace;
     font-weight: 400;
     line-height: 1.6;
+  }
+  @media (min-width: 1200px) {
+    .slide .slide-header h1 {
+      font-size: 3em;
+    }
   }
 </style>

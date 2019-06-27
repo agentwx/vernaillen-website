@@ -23,7 +23,7 @@
         side="left"
         color="aristo"
         avatar="https://test.aristolivingoutdoors.com/documents/89923/90356/aristo_icon_pale.svg"
-        class="always-show"
+        v-waypoint="{ active: true, callback: onWaypoint }"
       >
         <div>
           <label class="text-grey-6">project</label>E-commerce website<br/>
@@ -128,7 +128,17 @@ export default {
 }
 </script>
 
-<style type="scss" scoped>
+<style type="scss" >
+  .text-kindengezin {
+    color: #4b95b4;
+  }
+  .text-idewe {
+    color: #5f96c8;
+  }
+  .text-aristo {
+    color: #8b9064;
+  }
+
   .q-timeline__entry {
     opacity: 0;
   }
