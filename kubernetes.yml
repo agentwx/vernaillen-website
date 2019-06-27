@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vernaillen-website
+  labels:
+    app: vernaillen-website
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vernaillen-website
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: vernaillen-website
+    spec:
+      containers:
+        - image: vernaillen/vernaillen-website:latest
+          imagePullPolicy: IfNotPresent
+          name: vernaillen-website
+          ports:
+            - containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vernaillen-website
+spec:
+  selector:
+    app: vernaillen-website
+  type: LoadBalancer
+  ports:
+    -  protocol: TCP
+       port: 80
+       targetPort: 80
