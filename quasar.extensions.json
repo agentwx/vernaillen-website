@@ -48,5 +48,6 @@
     "options": [
       "scripts"
     ]
-  }
+  },
+  "@quasar/qmarkdown": {}
 }

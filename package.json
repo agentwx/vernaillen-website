@@ -30,6 +30,7 @@
     "@quasar/app": "^1.0.0-rc.7",
     "@quasar/cli": "^1.0.0-rc.2",
     "@quasar/quasar-app-extension-icon-genie": "^1.0.0",
+    "@quasar/quasar-app-extension-qmarkdown": "^1.0.0-beta.12",
     "@quasar/quasar-app-extension-testing": "^1.0.0",
     "@quasar/quasar-app-extension-testing-e2e-cypress": "^1.0.0-beta.10",
     "@quasar/quasar-app-extension-testing-quality": "^1.0.0-beta.8",

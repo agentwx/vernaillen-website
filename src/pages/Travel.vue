@@ -2,13 +2,20 @@
   <q-page
     padding
     transition="slide-left">
-    <p>This is the travel page</p>
+    <q-markdown :src="content" />
   </q-page>
 </template>
 
 <script>
+import content from '../content/travel.md'
+
 export default {
-  name: 'Travel'
+  name: 'Travel',
+  data () {
+    return {
+      content: content
+    }
+  }
 }
 </script>
 
