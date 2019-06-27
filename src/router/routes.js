@@ -1,4 +1,4 @@
-import DefaultLayout from '../layouts/Default.vue'
+import DefaultLayout from '../layouts/MainLayout.vue'
 import Home from '../pages/Home.vue'
 import Career from '../pages/Career.vue'
 import Stack from '../pages/Stack.vue'
