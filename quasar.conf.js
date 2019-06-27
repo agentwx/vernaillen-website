@@ -97,10 +97,6 @@ module.exports = function (ctx) {
     // animations: 'all', // --- includes all animations
     animations: [],
 
-    ssr: {
-      pwa: false
-    },
-
     pwa: {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
