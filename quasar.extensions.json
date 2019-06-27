@@ -11,9 +11,37 @@
       "dev": {
         "spa": {
           "iconHash": "8a44a059ff2b893c968587d421080f26"
+        },
+        "pwa": {
+          "iconHash": "8a44a059ff2b893c968587d421080f26"
         }
       },
-      "build": {}
+      "build": {
+        "spa": {
+          "iconHash": "8a44a059ff2b893c968587d421080f26"
+        },
+        "pwa": {
+          "iconHash": "8a44a059ff2b893c968587d421080f26"
+        }
+      }
     }
+  },
+  "@quasar/testing-unit-jest": {
+    "babel": "babelrc",
+    "options": [
+      "scripts"
+    ]
+  },
+  "@quasar/testing-quality": {
+    "options": [
+      "scripts"
+    ]
+  },
+  "@quasar/testing": {
+    "harnesses": [
+      "unit-jest",
+      "e2e-webdriver",
+      "quality"
+    ]
   }
 }
