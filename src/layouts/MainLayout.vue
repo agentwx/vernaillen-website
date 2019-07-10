@@ -19,7 +19,7 @@
             :src="require('../assets/img/vernaillen-logo.png')"
             style="height: 50px; width: 120px"
             alt="Wouter Vernaillen\'s logo"
-            transition="slide-down">
+            transition="slide-left">
             <template v-slot:loading/>
           </q-img>
         </router-link>
