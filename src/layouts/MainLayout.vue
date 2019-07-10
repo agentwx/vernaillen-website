@@ -11,7 +11,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <div class="q-py-sm q-px-md">
-            {{pageName()}}
+            {{currentPageName}}
           </div>
         </q-toolbar-title>
         <router-link to="/home" class="absolute-center">
@@ -22,7 +22,7 @@
             <template v-slot:loading/>
           </q-img>
         </router-link>
-        <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" class="lt-sm" />
+        <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" alt="toggle menu" class="lt-sm" />
       </q-toolbar>
     </q-header>
 
@@ -41,48 +41,15 @@
         </q-toolbar-title>
       </q-toolbar>
       <q-list >
-        <q-item to="/home" clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="home" />
-          </q-item-section>
-          <q-item-section>Home</q-item-section>
-        </q-item>
-        <q-separator></q-separator>
-        <q-item to="/career" clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="work" />
-          </q-item-section>
-          <q-item-section>Career</q-item-section>
-        </q-item>
-        <q-separator></q-separator>
-        <q-item to="/stack" clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="code" />
-          </q-item-section>
-          <q-item-section>Stack</q-item-section>
-        </q-item>
-        <q-separator></q-separator>
-        <q-item to="/music" clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="music_note" />
-          </q-item-section>
-          <q-item-section>Music</q-item-section>
-        </q-item>
-        <q-separator></q-separator>
-        <q-item to="/travel" clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="flight_takeoff" />
-          </q-item-section>
-          <q-item-section>Travel</q-item-section>
-        </q-item>
-        <q-separator></q-separator>
-        <q-item to="/contact" clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="person" />
-          </q-item-section>
-          <q-item-section>Contact</q-item-section>
-        </q-item>
-        <q-separator></q-separator>
+        <div v-for="(page, index) in pages" :key="index">
+          <q-item :to="page.path" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon color="primary" :name="page.icon" />
+            </q-item-section>
+            <q-item-section>{{page.name}}</q-item-section>
+          </q-item>
+          <q-separator></q-separator>
+        </div>
       </q-list>
       <div class="q-mini-drawer-hide absolute" style="top: 7px; left: -18px">
         <q-btn
@@ -92,6 +59,7 @@
           color="primary"
           icon="chevron_right"
           @click="miniState = true"
+          alt="collapse menu"
         />
       </div>
     </q-drawer>
@@ -104,7 +72,7 @@
         <router-view />
       </transition>
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-        <q-btn fab icon="keyboard_arrow_up" color="primary" />
+        <q-btn fab icon="keyboard_arrow_up" color="primary" alt="back to top" />
       </q-page-scroller>
     </q-page-container>
 
@@ -125,17 +93,26 @@ export default {
       prevHeight: 0,
       transitionName: 'slide-left',
       currentPageName: this.$router.currentRoute.name,
-      showBreadcrumb: false
+      showBreadcrumb: false,
+      pages: {
+        0: { name: 'Home', path: '/home', icon: 'home' },
+        1: { name: 'Career', path: '/career', icon: 'work' },
+        2: { name: 'Stack', path: '/stack', icon: 'code' },
+        3: { name: 'Blog', path: '/blog', icon: 'newspaper' },
+        4: { name: 'Music', path: '/music', icon: 'music_note' },
+        5: { name: 'Travel', path: '/travel', icon: 'flight_takeoff' },
+        6: { name: 'Contact', path: '/contact', icon: 'mail' }
+      }
     }
   },
   created () {
     this.$router.beforeEach((to, from, next) => {
-      const toDepth = to.name.length
-      const fromDepth = from.name.length
-      let transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
-      if (toDepth === 1 && fromDepth === 6) {
+      let fromPos = this.getPagePosition(from.name)
+      let toPos = this.getPagePosition(to.name)
+      let transitionName = toPos < fromPos ? 'slide-right' : 'slide-left'
+      if (toPos === 0 && fromPos === 6) {
         transitionName = 'slide-left'
-      } else if (toDepth === 6 && fromDepth === 1) {
+      } else if (toPos === 6 && fromPos === 0) {
         transitionName = 'slide-right'
       }
       this.transitionName = transitionName || 'slide-left'
@@ -148,47 +125,38 @@ export default {
   },
   methods: {
     drawerClick (e) {
-      // if in "mini" state and user
-      // click on drawer, we switch it to "normal" mode
       if (this.miniState) {
         this.miniState = false
-
-        // notice we have registered an event with capture flag;
-        // we need to stop further propagation as this click is
-        // intended for switching drawer to "normal" mode only
         e.stopPropagation()
       }
     },
     handleSwipeLeft () {
-      if (this.currentPageName.length === 0) {
-        this.$router.push({ name: 'xx' })
-      } else if (this.currentPageName.length > 5) {
-        this.$router.push({ name: 'x' })
-      } else {
-        this.$router.push({ name: this.currentPageName + 'x' })
+      let nextPos = 1
+      if (this.currentPageName !== '') {
+        let currentPos = this.getPagePosition(this.currentPageName)
+        nextPos = currentPos + 1
+        if (nextPos > 6) {
+          nextPos = 0
+        }
       }
+      this.$router.push(this.pages[nextPos].path)
     },
     handleSwipeRight () {
-      if (this.currentPageName.length < 2) {
-        this.$router.push({ name: 'xxxxxx' })
-      } else {
-        this.$router.push({ name: this.currentPageName.substring(1) })
+      let nextPos = 6
+      if (this.currentPageName !== '') {
+        let currentPos = this.getPagePosition(this.currentPageName)
+        nextPos = currentPos - 1
+        if (nextPos < 0) {
+          nextPos = 6
+        }
       }
+      this.$router.push(this.pages[nextPos].path)
     },
-    pageName () {
-      switch (this.currentPageName) {
-        case 'xx':
-          return 'Career'
-        case 'xxx':
-          return 'Stack'
-        case 'xxxx':
-          return 'Music'
-        case 'xxxxx':
-          return 'Travel'
-        case 'xxxxxx':
-          return 'Contact'
-        default:
-          return 'Home'
+    getPagePosition (pageName) {
+      for (let i = 0; i < 7; i++) {
+        if (this.pages[i].name === pageName) {
+          return i
+        }
       }
     }
   }

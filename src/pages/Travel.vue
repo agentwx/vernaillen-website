@@ -1,7 +1,5 @@
 <template>
-  <q-page
-    padding
-    transition="slide-left">
+  <q-page padding>
     <q-markdown :src="content" />
   </q-page>
 </template>

@@ -2,6 +2,7 @@ import DefaultLayout from '../layouts/MainLayout.vue'
 import Home from '../pages/Home.vue'
 import Career from '../pages/Career.vue'
 import Stack from '../pages/Stack.vue'
+import Blog from '../pages/Blog.vue'
 import Music from '../pages/Music.vue'
 import Travel from '../pages/Travel.vue'
 import Contact from '../pages/Contact.vue'
@@ -13,12 +14,13 @@ const routes = [
     component: DefaultLayout,
     children: [
       { path: '', name: '', component: Home },
-      { path: '/home', name: 'x', component: Home },
-      { path: '/career', name: 'xx', component: Career },
-      { path: '/stack', name: 'xxx', component: Stack },
-      { path: '/music', name: 'xxxx', component: Music },
-      { path: '/travel', name: 'xxxxx', component: Travel },
-      { path: '/contact', name: 'xxxxxx', component: Contact }
+      { path: '/home', name: 'Home', component: Home },
+      { path: '/career', name: 'Career', component: Career },
+      { path: '/stack', name: 'Stack', component: Stack },
+      { path: '/blog*', name: 'Blog', component: Blog, props: true },
+      { path: '/music', name: 'Music', component: Music },
+      { path: '/travel', name: 'Travel', component: Travel },
+      { path: '/contact', name: 'Contact', component: Contact }
     ]
   }
 ]

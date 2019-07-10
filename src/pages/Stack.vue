@@ -1,7 +1,5 @@
 <template>
-  <q-page
-    padding
-    transition="slide-left">
+  <q-page padding>
     <p>This is the technologies stack I'm specialising in:</p>
     <p>(Click on a technology to see at which projects I have used it)</p>
   </q-page>

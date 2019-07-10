@@ -3,6 +3,7 @@
     <p>
       <img
         src="~assets/sad.svg"
+        alt="sad face"
         style="width:30vw;max-width:150px;"
       >
     </p>
@@ -10,6 +11,7 @@
     <q-btn
       color="secondary"
       style="width:200px;"
+      alt="Go Back"
       @click="$router.push('/')"
     >Go back</q-btn>
   </div>
