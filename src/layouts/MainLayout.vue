@@ -14,15 +14,16 @@
             {{currentPageName}}
           </div>
         </q-toolbar-title>
-        <router-link to="/home" class="absolute-center">
+        <router-link to="/home" class="absolute-center" area-label="Go to home">
           <q-img
             :src="require('../assets/img/vernaillen-logo.png')"
             style="height: 50px; width: 120px"
+            alt="Wouter Vernaillen\'s logo"
             transition="slide-down">
             <template v-slot:loading/>
           </q-img>
         </router-link>
-        <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" alt="toggle menu" class="lt-sm" />
+        <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" alt="Toggle menu" aria-label="Toggle menu" class="lt-sm" />
       </q-toolbar>
     </q-header>
 
@@ -42,7 +43,7 @@
       </q-toolbar>
       <q-list >
         <div v-for="(page, index) in pages" :key="index">
-          <q-item :to="page.path" clickable v-ripple>
+          <q-item :to="page.path" clickable v-ripple area-label="Go to {{page.name}}">
             <q-item-section avatar>
               <q-icon color="primary" :name="page.icon" />
             </q-item-section>
@@ -59,7 +60,8 @@
           color="primary"
           icon="chevron_right"
           @click="miniState = true"
-          alt="collapse menu"
+          alt="Collapse menu"
+          aria-label="Collapse menu"
         />
       </div>
     </q-drawer>
@@ -72,7 +74,7 @@
         <router-view />
       </transition>
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-        <q-btn fab icon="keyboard_arrow_up" color="primary" alt="back to top" />
+        <q-btn fab icon="keyboard_arrow_up" color="primary" alt="Back to top" aria-label="Back to top" />
       </q-page-scroller>
     </q-page-container>
 
