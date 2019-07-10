@@ -102,8 +102,8 @@ module.exports = function (ctx) {
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
         start_url: '/',
-        name: 'Vernaillen.com',
-        short_name: 'Vernaillen.com',
+        name: 'Vernaillen.dev',
+        short_name: 'Vernaillen.dev',
         description: 'Wouter Vernaillen\'s website',
         display: 'standalone',
         orientation: 'portrait',
