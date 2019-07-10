@@ -7,8 +7,7 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     boot: [
       'i18n',
-      'axios',
-      'waipoint'
+      'axios'
     ],
 
     css: [
@@ -95,6 +94,10 @@ module.exports = function (ctx) {
 
     // animations: 'all', // --- includes all animations
     animations: [],
+
+    ssr: {
+      pwa: true
+    },
 
     pwa: {
       // workboxPluginMode: 'InjectManifest',
