@@ -43,7 +43,7 @@
       </q-toolbar>
       <q-list >
         <div v-for="(page, index) in pages" :key="index">
-          <q-item :to="page.path" clickable v-ripple area-label="Go to {{page.name}}">
+          <q-item :to="page.path" clickable v-ripple :area-label="'Go to' + page.name">
             <q-item-section avatar>
               <q-icon color="primary" :name="page.icon" />
             </q-item-section>
