@@ -4,7 +4,7 @@
       id="vernaillen-logo"
       :src="require('../assets/img/vernaillen-logo.png')"
       alt="Wouter Vernaillen\'s logo"
-      transition="slide-right">
+      transition="slide-down">
       <template v-slot:loading/>
     </q-img>
   </router-link>
