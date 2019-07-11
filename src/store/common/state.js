@@ -9,5 +9,6 @@ export default {
     5: { name: 'Travel', path: '/travel', icon: 'flight_takeoff' },
     6: { name: 'Contact', path: '/contact', icon: 'mail' }
   },
-  currentPageName: ''
+  currentPageName: '',
+  currentBlogPostName: ''
 }

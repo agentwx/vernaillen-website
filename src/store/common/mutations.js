@@ -4,3 +4,6 @@ export const toc = (state, toc) => {
 export const currentPageName = (state, pageName) => {
   state.currentPageName = pageName
 }
+export const currentBlogPostName = (state, blogPostName) => {
+  state.currentBlogPostName = blogPostName
+}

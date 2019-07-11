@@ -9,20 +9,16 @@
 
     <q-header class="bg-white text-grey-9 shadow-1">
       <q-toolbar>
-        <q-toolbar-title>
-          <div class="q-py-sm q-px-md">
-            {{$store.state.common.currentPageName}}
-          </div>
-        </q-toolbar-title>
-        <router-link to="/home" class="absolute-center" area-label="Go to home">
+        <router-link to="/home" area-label="Go to home">
           <q-img
             :src="require('../assets/img/vernaillen-logo.png')"
             style="height: 50px; width: 120px"
             alt="Wouter Vernaillen\'s logo"
-            transition="slide-left">
+            transition="slide-right">
             <template v-slot:loading/>
           </q-img>
         </router-link>
+        <breadcrumbs />
         <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" alt="Toggle menu" aria-label="Toggle menu" class="lt-sm" />
       </q-toolbar>
     </q-header>
@@ -70,7 +66,6 @@
       v-touch-swipe.mouse.left="handleSwipeLeft"
       v-touch-swipe.mouse.right="handleSwipeRight"
       style="overflow: hidden;">
-      <breadcrumbs v-if="$store.state.common.currentPageName !== 'Home'"/>
       <transition :name="transitionName" mode="out-in">
         <router-view />
       </transition>
@@ -115,6 +110,7 @@ export default {
         transitionName = 'slide-right'
       }
       this.transitionName = transitionName || 'slide-left'
+      this.$store.commit('common/currentBlogPostName', '')
       next()
     })
     this.$router.afterEach((to, from, next) => {
@@ -169,16 +165,12 @@ export default {
 </script>
 
 <style type="scss">
-  .q-tab {
-    height: 50px;
-    padding: 0;
+  .q-breadcrumbs {
+    padding: 0 0 0 25px;
   }
   .q-item.q-router-link--active,
   .q-item--active {
     background-color: #ddd;
-  }
-  .q-breadcrumbs {
-    padding: 12px 35px;
   }
 
   .slide-left-enter-active,
