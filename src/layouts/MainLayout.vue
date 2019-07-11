@@ -1,70 +1,44 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-ajax-bar
-      ref="bar"
-      position="top"
-      color="primary"
-      size="3px"
-    />
-
+  <q-layout view="hHr lpR fFr">
     <q-header class="bg-white text-grey-9 shadow-1">
       <q-toolbar>
-        <router-link to="/home" area-label="Go to home">
-          <q-img
-            :src="require('../assets/img/vernaillen-logo.png')"
-            style="height: 50px; width: 120px"
-            alt="Wouter Vernaillen\'s logo"
-            transition="slide-right">
-            <template v-slot:loading/>
-          </q-img>
-        </router-link>
-        <breadcrumbs />
-        <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" alt="Toggle menu" aria-label="Toggle menu" class="lt-sm" />
+        <logo/>
+        <q-space/>
+        <q-btn dense flat round icon="fas fa-bars" @click="showMenu = !showMenu" alt="Toggle menu" aria-label="Toggle menu" />
+      </q-toolbar>
+      <q-toolbar>
+        <q-breadcrumbs separator="" gutter="lg">
+          <q-breadcrumbs-el :to="previousPagePath" icon="fas fa-backward" />
+          <q-breadcrumbs-el :label="$store.state.common.currentPageName" :icon="currentPageIcon" class="text-black" />
+          <q-breadcrumbs-el :to="nextPagePath" icon="fas fa-forward" class="text-primary" />
+        </q-breadcrumbs>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="showMenu"
-              :mini="miniState"
-              @click.capture="drawerClick"
               side="right"
               :width="250"
               :breakpoint="500"
               bordered
-              show-if-above
               content-class="bg-grey-1">
-      <q-toolbar class="lt-sm shadow-1">
-        <q-toolbar-title class="text-center">
-          Menu
-        </q-toolbar-title>
-      </q-toolbar>
-      <q-list >
+      <q-toolbar id="menu-toolbar"/>
+      <q-list>
+        <q-separator></q-separator>
         <div v-for="(page, index) in pages" :key="index">
-          <q-item :to="page.path" clickable v-ripple :area-label="'Go to' + page.name">
+          <q-item :to="page.path" clickable v-ripple :area-label="'Go to' + page.name" active-class="text-black q-item--active">
             <q-item-section avatar>
-              <q-icon color="primary" :name="page.icon" />
+              <q-icon class="text-primary" :name="page.icon" />
             </q-item-section>
             <q-item-section>{{page.name}}</q-item-section>
           </q-item>
           <q-separator></q-separator>
         </div>
       </q-list>
-      <div class="q-mini-drawer-hide absolute" style="top: 7px; left: -18px">
-        <q-btn
-          dense
-          round
-          unelevated
-          color="primary"
-          icon="chevron_right"
-          @click="miniState = true"
-          alt="Collapse menu"
-          aria-label="Collapse menu"
-        />
-      </div>
     </q-drawer>
 
     <q-page-container
-      v-touch-swipe.mouse.left="handleSwipeLeft"
-      v-touch-swipe.mouse.right="handleSwipeRight"
+      v-touch-swipe.mouse.left="swipeLeft"
+      v-touch-swipe.mouse.right="swipeRight"
       style="overflow: hidden;">
       <transition :name="transitionName" mode="out-in">
         <router-view />
@@ -82,17 +56,19 @@
 </template>
 
 <script>
-import Breadcrumbs from '../components/Breadcrumbs'
+import Logo from '../components/Logo'
 
 export default {
   name: 'LayoutDefault',
   components: {
-    Breadcrumbs
+    Logo
+  },
+  props: {
+    pathMatch: String
   },
   data () {
     return {
-      showMenu: true,
-      miniState: false,
+      showMenu: false,
       prevHeight: 0,
       pages: this.$store.state.common.pages,
       showBreadcrumb: false,
@@ -118,14 +94,8 @@ export default {
     })
     this.setCurrentPageName(this.$router.currentRoute.name)
   },
-  methods: {
-    drawerClick (e) {
-      if (this.miniState) {
-        this.miniState = false
-        e.stopPropagation()
-      }
-    },
-    handleSwipeLeft () {
+  computed: {
+    nextPagePath () {
       let nextPos = 1
       if (this.currentPageName !== '') {
         let currentPos = this.getPagePosition(this.$store.state.common.currentPageName)
@@ -134,9 +104,9 @@ export default {
           nextPos = 0
         }
       }
-      this.$router.push(this.pages[nextPos].path)
+      return this.pages[nextPos].path
     },
-    handleSwipeRight () {
+    previousPagePath () {
       let nextPos = 6
       if (this.currentPageName !== '') {
         let currentPos = this.getPagePosition(this.$store.state.common.currentPageName)
@@ -145,7 +115,26 @@ export default {
           nextPos = 6
         }
       }
-      this.$router.push(this.pages[nextPos].path)
+      return this.pages[nextPos].path
+    },
+    currentPageIcon () {
+      for (let i = 0; i < 7; i++) {
+        if (this.$store.state.common.pages[i].name === this.$store.state.common.currentPageName) {
+          return this.$store.state.common.pages[i].icon
+        }
+      }
+      return 'add'
+    },
+    isBlogPost () {
+      return this.$store.state.common.currentPageName === 'Blog'
+    }
+  },
+  methods: {
+    swipeLeft () {
+      this.$router.push(this.nextPagePath)
+    },
+    swipeRight () {
+      this.$router.push(this.previousPagePath)
     },
     getPagePosition (pageName) {
       for (let i = 0; i < 7; i++) {
@@ -166,11 +155,24 @@ export default {
 
 <style type="scss">
   .q-breadcrumbs {
-    padding: 0 0 0 25px;
+    margin-left: auto;
+    margin-right: auto;
   }
+  .q-breadcrumbs--last a {
+    pointer-events: inherit;
+  }
+
   .q-item.q-router-link--active,
   .q-item--active {
     background-color: #ddd;
+  }
+
+  .q-item.q-router-link--active .q-icon,
+  .q-item--active .q-icon {
+    color: black !important;
+  }
+  #menu-toolbar {
+    height: 100px;
   }
 
   .slide-left-enter-active,

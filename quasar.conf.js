@@ -19,17 +19,15 @@ module.exports = function (ctx) {
     extras: [
       // 'ionicons-v4',
       // 'mdi-v3',
-      // 'fontawesome-v5',
+      'fontawesome-v5'
       // 'eva-icons',
       // 'themify',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
-      'material-icons' // optional, you are not bound to it
+      // 'material-icons' // optional, you are not bound to it
     ],
 
     framework: {
-      // iconSet: 'ionicons-v4',
-      // lang: 'de', // Quasar language
+      iconSet: 'fontawesome-v5',
 
       // all: true, // --- includes everything; for dev only!
 
@@ -53,11 +51,11 @@ module.exports = function (ctx) {
         'QFooter',
         'QCarousel',
         'QCarouselSlide',
-        'QAjaxBar',
         'QTimeline',
         'QTimelineEntry',
         'QBreadcrumbs',
-        'QBreadcrumbsEl'
+        'QBreadcrumbsEl',
+        'QSpace'
       ],
 
       directives: [

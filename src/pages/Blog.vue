@@ -2,7 +2,7 @@
   <q-page padding>
     <template v-if="pathMatch">
       <q-markdown :src="content"/>
-      <q-btn to="/blog" icon="arrow_left">
+      <q-btn to="/blog" icon="fas fa-long-arrow-alt-left">
         Blog overview
       </q-btn>
     </template>
