@@ -11,7 +11,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <div class="q-py-sm q-px-md">
-            {{currentPageName}}
+            {{$store.state.common.currentPageName}}
           </div>
         </q-toolbar-title>
         <router-link to="/home" class="absolute-center" area-label="Go to home">
@@ -70,6 +70,7 @@
       v-touch-swipe.mouse.left="handleSwipeLeft"
       v-touch-swipe.mouse.right="handleSwipeRight"
       style="overflow: hidden;">
+      <breadcrumbs v-if="$store.state.common.currentPageName !== 'Home'"/>
       <transition :name="transitionName" mode="out-in">
         <router-view />
       </transition>
@@ -86,25 +87,21 @@
 </template>
 
 <script>
+import Breadcrumbs from '../components/Breadcrumbs'
+
 export default {
   name: 'LayoutDefault',
+  components: {
+    Breadcrumbs
+  },
   data () {
     return {
       showMenu: true,
       miniState: false,
       prevHeight: 0,
-      transitionName: 'slide-left',
-      currentPageName: this.$router.currentRoute.name,
+      pages: this.$store.state.common.pages,
       showBreadcrumb: false,
-      pages: {
-        0: { name: 'Home', path: '/home', icon: 'home' },
-        1: { name: 'Career', path: '/career', icon: 'work' },
-        2: { name: 'Stack', path: '/stack', icon: 'code' },
-        3: { name: 'Blog', path: '/blog', icon: 'newspaper' },
-        4: { name: 'Music', path: '/music', icon: 'music_note' },
-        5: { name: 'Travel', path: '/travel', icon: 'flight_takeoff' },
-        6: { name: 'Contact', path: '/contact', icon: 'mail' }
-      }
+      transitionName: 'slide-left'
     }
   },
   created () {
@@ -121,9 +118,9 @@ export default {
       next()
     })
     this.$router.afterEach((to, from, next) => {
-      this.currentPageName = to.name
+      this.setCurrentPageName(to.name)
     })
-    this.currentPageName = this.$router.currentRoute.name
+    this.setCurrentPageName(this.$router.currentRoute.name)
   },
   methods: {
     drawerClick (e) {
@@ -135,7 +132,7 @@ export default {
     handleSwipeLeft () {
       let nextPos = 1
       if (this.currentPageName !== '') {
-        let currentPos = this.getPagePosition(this.currentPageName)
+        let currentPos = this.getPagePosition(this.$store.state.common.currentPageName)
         nextPos = currentPos + 1
         if (nextPos > 6) {
           nextPos = 0
@@ -146,7 +143,7 @@ export default {
     handleSwipeRight () {
       let nextPos = 6
       if (this.currentPageName !== '') {
-        let currentPos = this.getPagePosition(this.currentPageName)
+        let currentPos = this.getPagePosition(this.$store.state.common.currentPageName)
         nextPos = currentPos - 1
         if (nextPos < 0) {
           nextPos = 6
@@ -156,10 +153,16 @@ export default {
     },
     getPagePosition (pageName) {
       for (let i = 0; i < 7; i++) {
-        if (this.pages[i].name === pageName) {
+        if (this.$store.state.common.pages[i].name === pageName) {
           return i
         }
       }
+    },
+    setCurrentPageName (pageName) {
+      if (pageName === '') {
+        pageName = 'Home'
+      }
+      this.$store.commit('common/currentPageName', pageName)
     }
   }
 }

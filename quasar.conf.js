@@ -10,6 +10,8 @@ module.exports = function (ctx) {
       'axios'
     ],
 
+    preFetch: true,
+
     css: [
       'app.styl'
     ],
@@ -53,7 +55,9 @@ module.exports = function (ctx) {
         'QCarouselSlide',
         'QAjaxBar',
         'QTimeline',
-        'QTimelineEntry'
+        'QTimelineEntry',
+        'QBreadcrumbs',
+        'QBreadcrumbsEl'
       ],
 
       directives: [
