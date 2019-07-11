@@ -21,10 +21,10 @@
     "audit:lighthouse:prod": "lighthouse https://test.vernaillen.dev view --output-path=./test/lighthouse/reports/index.html --config-path=./test/lighthouse/configs/full-config.js && quasar serve test/lighthouse/reports/ --port 8789 --open"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
-    "axios": "^0.18.1",
-    "quasar": "^1.0.0-beta.0",
-    "vue-i18n": "^8.0.0"
+    "quasar": "^1.0.4",
+    "@quasar/extras": "^1.1.4",
+    "axios": "^0.19.0",
+    "vue-i18n": "^8.12.0"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0-rc.7",
