@@ -7,7 +7,6 @@
         side="right"
         color="kindengezin"
         avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy2dgl6zPZfpCL5fBoVlPgFvLRMY6p44-HSKEgxk4a7ufVIghy"
-        class="always-show"
       >
         <div>
           <label class="text-grey-6">project</label>Governmental portal<br/>
@@ -23,7 +22,6 @@
         side="left"
         color="aristo"
         avatar="https://test.aristolivingoutdoors.com/documents/89923/90356/aristo_icon_pale.svg"
-        v-waypoint="{ active: true, callback: onWaypoint }"
       >
         <div>
           <label class="text-grey-6">project</label>E-commerce website<br/>
@@ -39,7 +37,6 @@
         side="right"
         color="idewe"
         avatar="https://www.tarieven-externe-diensten.be/documents/448485/448840/over_Idewe.png"
-        v-waypoint="{ active: true, callback: onWaypoint }"
       >
         <div>
           <label class="text-grey-6">project</label>bla bla bla<br/>
@@ -55,7 +52,6 @@
         side="left"
         color="kindengezin"
         avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy2dgl6zPZfpCL5fBoVlPgFvLRMY6p44-HSKEgxk4a7ufVIghy"
-        v-waypoint="{ active: true, callback: onWaypoint }"
       >
         <div>
           <label class="text-grey-6">project</label>bla bla bla<br/>
@@ -70,8 +66,7 @@
         subtitle="2013"
         side="right"
         color="orange"
-        avatar="http://www.logotypes101.com/logos/535/9C96544F5B74F971610B02BE4F727A29/Colruyt.png"
-        v-waypoint="{ active: true, callback: onWaypoint }"
+        avatar="https://crm.theshift.be/media/cache/attachment/resize/111/member_logo/57e0e24e0638f.jpeg"
       >
         <div>
           <label class="text-grey-6">project</label>bla bla bla<br/>
@@ -85,7 +80,6 @@
         title="Event Title"
         subtitle="February 22, 1986"
         side="left"
-        v-waypoint="{ active: true, callback: onWaypoint }"
       >
         <div>
           <label class="text-grey-6">project</label>bla bla bla<br/>
@@ -99,7 +93,6 @@
         title="Event Title"
         subtitle="February 22, 1986"
         side="right"
-        v-waypoint="{ active: true, callback: onWaypoint }"
       >
         <div>
           <label class="text-grey-6">project</label>bla bla bla<br/>
@@ -114,17 +107,7 @@
 
 <script>
 export default {
-  name: 'Career',
-
-  methods: {
-    onWaypoint ({ el, going }) {
-      // going: in, out
-      // direction: top, right, bottom, left
-      if (going === this.$waypointMap.GOING_IN) {
-        el.classList.add('show-element')
-      }
-    }
-  }
+  name: 'Career'
 }
 </script>
 
@@ -139,17 +122,6 @@ export default {
     color: #8b9064;
   }
 
-  .q-timeline__entry {
-    opacity: 0;
-  }
-  .q-timeline__entry.always-show {
-    opacity: 1 !important;
-  }
-  .q-timeline__entry.show-element {
-    opacity: 1;
-    transition: opacity 1s;
-    transition-delay: .5s;
-  }
   .q-timeline__content label {
     width: 60px;
     display: inline-block;

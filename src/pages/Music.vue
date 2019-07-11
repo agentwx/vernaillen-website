@@ -1,7 +1,5 @@
 <template>
-  <q-page
-    padding
-    transition="slide-left">
+  <q-page padding>
     <p>This is the music page</p>
   </q-page>
 </template>
