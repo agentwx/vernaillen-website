@@ -44,7 +44,7 @@
         <router-view />
       </transition>
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-        <q-btn fab icon="keyboard_arrow_up" color="primary" alt="Back to top" aria-label="Back to top" />
+        <q-btn fab icon="fas fa-long-arrow-alt-up" color="primary" alt="Back to top" aria-label="Back to top" />
       </q-page-scroller>
     </q-page-container>
 
